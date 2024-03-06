@@ -88,6 +88,7 @@ class NougatModelPLModule(pl.LightningModule):
         preds = self.model.inference(
             image_tensors=image_tensors,
             return_attentions=False,
+            early_stopping=False,
         )["predictions"]
         gts = self.model.decoder.tokenizer.batch_decode(
             markdown, skip_special_tokens=True
@@ -193,8 +194,8 @@ class NougatModelPLModule(pl.LightningModule):
             / self.config.exp_name
             / self.config.exp_version
         )
-        self.model.save_pretrained(save_path)
-        self.model.decoder.tokenizer.save_pretrained(save_path)
+        self.model.save_pretrained(save_path, safe_serialization=False)
+        self.model.decoder.tokenizer.save_pretrained(save_path, safe_serialization=False)
 
 
 class NougatDataPLModule(pl.LightningDataModule):
@@ -229,7 +230,8 @@ class NougatDataPLModule(pl.LightningDataModule):
                 torch.utils.data.ConcatDataset(self.val_datasets),
                 batch_size=self.val_batch_sizes[0],
                 pin_memory=True,
-                shuffle=True,
+                shuffle=False,
+                num_workers=self.config.num_workers,
                 collate_fn=self.ignore_none_collate,
             )
         ]
