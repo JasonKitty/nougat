@@ -168,7 +168,7 @@ def train(config):
     grad_norm_callback = GradNormCallback()
     custom_ckpt = CustomCheckpointIO()
 
-    if not config.debug:
+    if not True:
         logger = Logger(config.exp_name, project="Nougat", config=dict(config))
     else:
         logger = TensorBoardLogger(
@@ -179,7 +179,7 @@ def train(config):
         )
     trainer = pl.Trainer(
         num_nodes=config.get("num_nodes", 1),
-        devices="auto",
+        devices=[0,1,2,3,4,5,6,7],
         strategy="ddp_find_unused_parameters_true",
         accelerator="auto",
         # plugins=[SLURMEnvironment(auto_requeue=False)],
