@@ -355,7 +355,7 @@ def postprocess_single(generation: str, markdown_fix: bool = True) -> str:
     # obvious repetition detection
     generation = truncate_repetitions(generation)
     # Reference corrections
-    generation = remove_hallucinated_references(generation)
+    # generation = remove_hallucinated_references(generation)
     generation = re.sub(
         r"^\* \[\d+\](\s?[A-W]\.+\s?){10,}.*$", "", generation, flags=re.M
     )

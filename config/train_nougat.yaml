@@ -1,12 +1,12 @@
 resume_from_checkpoint_path: null
 result_path: "result"
-model_path: null
-dataset_paths: ["path/to/train.jsonl"]
+model_path: "/mnt/geogpt-gpfs/zhijiang/home/zsb/nougat/nougat/nougat_checkpoint_base"
+dataset_paths: ["/mnt/geogpt-gpfs/zhijiang/home/zsb/nougat/nougat/train.jsonl"]
 tokenizer: "dataset/tokenizer.json"
 exp_name: "nougat"
-train_batch_sizes: [1]
+train_batch_sizes: [2]
 num_workers: 8
-val_batch_sizes: [1]
+val_batch_sizes: [2]
 val_batches: 1
 input_size: [896, 672]
 max_length: 4096

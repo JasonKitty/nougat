@@ -163,10 +163,18 @@ def main():
     predictions = []
     file_index = 0
     page_num = 0
+
+    times = []
     for i, (sample, is_last_page) in enumerate(tqdm(dataloader)):
+        import time
+        start_time = time.time()
         model_output = model.inference(
             image_tensors=sample, early_stopping=args.skipping
         )
+        end_time = time.time()
+        time_cost = end_time - start_time
+        print(time_cost)
+        times.append(time_cost)
         # check if model output is faulty
         for j, output in enumerate(model_output["predictions"]):
             if page_num == 0:
@@ -205,6 +213,7 @@ def main():
                 predictions = []
                 page_num = 0
                 file_index += 1
+    print(sum(times)/len(times))
 
 
 if __name__ == "__main__":
